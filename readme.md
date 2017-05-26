@@ -8,26 +8,26 @@ Todo:
 
 ### Prerequisites
 
-TODO:
+* [node (most recent version)](https://nodejs.org/en/)
+* npm
+* [VSCode](https://code.visualstudio.com/)
 
-```
-Give examples
-```
 
 ### Installing
 
-TODO:
+run the following commands
 
 ```
-Give examples
+npm install
+npm start
 ```
 
 ## Running the tests
 
-TODO:
+run the following commands
 
 ```
-Give examples
+npm test
 ```
 
 ## Deployment
@@ -49,7 +49,7 @@ Give examples
 ## Authors
 
 * **Madhura Jayaraman** - *Initial work* - [MadhuraJayaraman](https://github.com/MadhuraJayaraman)
-
+* **Claudius Mbemba** - *Initial work* - [User1m](https://github.com/User1m)
 
 ## License
 
@@ -57,6 +57,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-TODO:
-
-* etc
+* [Hackathon Starter](https://github.com/sahat/hackathon-starter)
+* [Annotorious](https://github.com/annotorious/annotorious)
