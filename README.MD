@@ -11,6 +11,7 @@ Todo:
 * [node (most recent version)](https://nodejs.org/en/)
 * npm
 * [VSCode](https://code.visualstudio.com/)
+* [mongodb](https://docs.mongodb.com/manual/installation/)
 
 
 ### Installing
