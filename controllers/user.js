@@ -42,7 +42,7 @@ exports.postLogin = (req, res, next) => {
     req.logIn(user, (err) => {
       if (err) { return next(err); }
       req.flash('success', { msg: 'Success! You are logged in.' });
-      res.redirect(req.session.returnTo || '/');
+      res.redirect(req.session.returnTo || '/dashboard');
     });
   })(req, res, next);
 };
@@ -287,7 +287,7 @@ exports.postReset = (req, res, next) => {
     };
     return transporter.sendMail(mailOptions)
       .then(() => {
-        req.flash('success', { msg: 'Success! Your password has been changed.' });    
+        req.flash('success', { msg: 'Success! Your password has been changed.' });
       });
   };
 
@@ -373,4 +373,11 @@ exports.postForgot = (req, res, next) => {
     .then(sendForgotPasswordEmail)
     .then(() => res.redirect('/forgot'))
     .catch(next);
+};
+
+
+exports.getDashboard = (req, res) => {
+  res.render('dashboard', {
+    title: 'Dashboard'
+  });
 };

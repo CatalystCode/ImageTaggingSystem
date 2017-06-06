@@ -144,6 +144,10 @@ app.get('/api/upload', apiController.getFileUpload);
 app.post('/api/upload', upload.single('myFile'), apiController.postFileUpload);
 
 
+/**
+ * User app routes
+ */
+app.get('/dashboard', userController.getDashboard);
 
 
 
