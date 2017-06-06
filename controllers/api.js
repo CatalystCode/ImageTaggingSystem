@@ -3,28 +3,7 @@
 const bluebird = require('bluebird');
 const request = bluebird.promisifyAll(require('request'), { multiArgs: true });
 const cheerio = require('cheerio');
-const graph = require('fbgraph');
-const LastFmNode = require('lastfm').LastFmNode;
-const tumblr = require('tumblr.js');
-const GitHub = require('github');
-const Twit = require('twit');
-const stripe = require('stripe')(process.env.STRIPE_SKEY);
-const twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
-const Linkedin = require('node-linkedin')(process.env.LINKEDIN_ID, process.env.LINKEDIN_SECRET, process.env.LINKEDIN_CALLBACK_URL);
 const clockwork = require('clockwork')({ key: process.env.CLOCKWORK_KEY });
-const paypal = require('paypal-rest-sdk');
-const lob = require('lob')(process.env.LOB_KEY);
-const ig = bluebird.promisifyAll(require('instagram-node').instagram());
-const foursquare = require('node-foursquare')({
-  secrets: {
-    clientId: process.env.FOURSQUARE_ID,
-    clientSecret: process.env.FOURSQUARE_SECRET,
-    redirectUrl: process.env.FOURSQUARE_REDIRECT_URL
-  }
-});
-
-foursquare.Venues = bluebird.promisifyAll(foursquare.Venues);
-foursquare.Users = bluebird.promisifyAll(foursquare.Users);
 
 /**
  * GET /api
@@ -47,15 +26,15 @@ exports.getFoursquare = (req, res, next) => {
     foursquare.Venues.getVenueAsync('49da74aef964a5208b5e1fe3', token.accessToken),
     foursquare.Users.getCheckinsAsync('self', null, token.accessToken)
   ])
-  .then(([trendingVenues, venueDetail, userCheckins]) => {
-    res.render('api/foursquare', {
-      title: 'Foursquare API',
-      trendingVenues,
-      venueDetail,
-      userCheckins
-    });
-  })
-  .catch(next);
+    .then(([trendingVenues, venueDetail, userCheckins]) => {
+      res.render('api/foursquare', {
+        title: 'Foursquare API',
+        trendingVenues,
+        venueDetail,
+        userCheckins
+      });
+    })
+    .catch(next);
 };
 
 /**
@@ -194,39 +173,39 @@ exports.getLastfm = (req, res, next) => {
       });
     });
   const artistTopAlbums = () =>
-      new Promise((resolve, reject) => {
-        lastfm.request('artist.getTopAlbums', {
-          artist: 'Roniit',
-          handlers: {
-            success: (data) => {
-              resolve(data.topalbums.album.slice(0, 3));
-            },
-            error: reject
-          }
-        });
+    new Promise((resolve, reject) => {
+      lastfm.request('artist.getTopAlbums', {
+        artist: 'Roniit',
+        handlers: {
+          success: (data) => {
+            resolve(data.topalbums.album.slice(0, 3));
+          },
+          error: reject
+        }
       });
+    });
   Promise.all([
     artistInfo(),
     artistTopTracks(),
     artistTopAlbums()
   ])
-  .then(([artistInfo, artistTopAlbums, artistTopTracks]) => {
-    const artist = {
-      name: artistInfo.artist.name,
-      image: artistInfo.artist.image.slice(-1)[0]['#text'],
-      tags: artistInfo.artist.tags.tag,
-      bio: artistInfo.artist.bio.summary,
-      stats: artistInfo.artist.stats,
-      similar: artistInfo.artist.similar.artist,
-      topAlbums: artistTopAlbums,
-      topTracks: artistTopTracks
-    };
-    res.render('api/lastfm', {
-      title: 'Last.fm API',
-      artist
-    });
-  })
-  .catch(next);
+    .then(([artistInfo, artistTopAlbums, artistTopTracks]) => {
+      const artist = {
+        name: artistInfo.artist.name,
+        image: artistInfo.artist.image.slice(-1)[0]['#text'],
+        tags: artistInfo.artist.tags.tag,
+        bio: artistInfo.artist.bio.summary,
+        stats: artistInfo.artist.stats,
+        similar: artistInfo.artist.similar.artist,
+        topAlbums: artistTopAlbums,
+        topTracks: artistTopTracks
+      };
+      res.render('api/lastfm', {
+        title: 'Last.fm API',
+        artist
+      });
+    })
+    .catch(next);
 };
 
 /**
@@ -321,15 +300,15 @@ exports.getSteam = (req, res, next) => {
     playerSummaries(),
     ownedGames()
   ])
-  .then(([playerAchievements, playerSummaries, ownedGames]) => {
-    res.render('api/steam', {
-      title: 'Steam Web API',
-      ownedGames: ownedGames.response.games,
-      playerAchievemments: playerAchievements.playerstats,
-      playerSummary: playerSummaries.response.players[0]
-    });
-  })
-  .catch(next);
+    .then(([playerAchievements, playerSummaries, ownedGames]) => {
+      res.render('api/steam', {
+        title: 'Steam Web API',
+        ownedGames: ownedGames.response.games,
+        playerAchievemments: playerAchievements.playerstats,
+        playerSummary: playerSummaries.response.players[0]
+      });
+    })
+    .catch(next);
 };
 
 /**
@@ -459,16 +438,16 @@ exports.getInstagram = (req, res, next) => {
     ig.media_popularAsync(),
     ig.user_self_media_recentAsync()
   ])
-  .then(([searchByUsername, searchByUserId, popularImages, myRecentMedia]) => {
-    res.render('api/instagram', {
-      title: 'Instagram API',
-      usernames: searchByUsername,
-      userById: searchByUserId,
-      popularImages,
-      myRecentMedia
-    });
-  })
-  .catch(next);
+    .then(([searchByUsername, searchByUserId, popularImages, myRecentMedia]) => {
+      res.render('api/instagram', {
+        title: 'Instagram API',
+        usernames: searchByUsername,
+        userById: searchByUserId,
+        popularImages,
+        myRecentMedia
+      });
+    })
+    .catch(next);
 };
 
 /**
