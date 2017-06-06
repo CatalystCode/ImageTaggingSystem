@@ -1,12 +1,12 @@
 {
-  "name": "hackathon-starter",
+  "name": "image-tagging-system",
   "version": "4.3.0",
-  "description": "A boilerplate for Node.js web applications",
+  "description": "A Node.js web applications",
   "repository": {
     "type": "git",
     "url": "https://github.com/sahat/hackathon-starter.git"
   },
-  "author": "Sahat Yalkabov",
+  "author": "PCT",
   "license": "MIT",
   "scripts": {
     "start": "nodemon app.js",
